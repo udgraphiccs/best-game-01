@@ -279,6 +279,16 @@ export function createWorld(audio, particles) {
         world.enemies.push(makeEnemy(kind, pos.x, pos.y, world.wave));
       }
     } else if (world.enemies.length === 0 && !world.boss) {
+      // Wave cleared: sweep every ember left on the field into the smith's
+      // pouch so nothing earned is stranded, then open the forge.
+      for (const pk of world.pickups) {
+        if (pk.kind === 'ember') world.embers += pk.value;
+      }
+      if (world.pickups.length > 0) {
+        particles.burst(p.x, p.y, PALETTE.gold, 24, 220, 0.6);
+        audio.pickup();
+      }
+      world.pickups = [];
       world.score += SCORE.waveClear;
       if (world.wave >= TOTAL_WAVES) return;
       offerForge();
@@ -425,6 +435,9 @@ export function createWorld(audio, particles) {
     }
 
     particles.update(dt);
+    // Firing reads mouseDown, not clicks — drain any click here so a stale
+    // one from play can never auto-buy a forge card or skip an ending screen.
+    input.consumeClick();
   }
 
   function update(dt, input) {

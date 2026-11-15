@@ -1,7 +1,8 @@
 // Emberforge — every pixel the game draws: the vale, the smith, the
 // creatures, the HUD, and the title / forge / ending screens.
 
-import { PALETTE, SCORE, STATES, TOTAL_WAVES, UPGRADE_COSTS, VIEW } from './config.js';
+import { PALETTE, SCORE, TOTAL_WAVES, UPGRADE_COSTS, VIEW } from './config.js';
+import { STATES } from './world.js';
 
 function roundRect(ctx, x, y, w, h, r) {
   ctx.beginPath();
@@ -527,7 +528,10 @@ export function createRenderer(canvas) {
       ctx.arc(b.x, b.y, b.radius * 0.5, 0, Math.PI * 2);
       ctx.fill();
     }
-    drawPlayer(ctx, world.player, time);
+    // On an ending screen the smith steps out of the frame: only the verdict shows.
+    if (world.state !== STATES.VICTORY && world.state !== STATES.DEFEAT) {
+      drawPlayer(ctx, world.player, time);
+    }
     world.particles.draw(ctx);
 
     if (world.state === STATES.PLAYING || world.state === STATES.FORGE) drawHud(ctx, world);
