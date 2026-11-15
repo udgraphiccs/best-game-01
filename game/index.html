@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emberforge — The Last Smith of Aethermoor</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #0d0819;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+  #wrap {
+    position: relative;
+    line-height: 0;
+  }
+  canvas {
+    width: min(96vw, 1280px);
+    height: auto;
+    aspect-ratio: 960 / 600;
+    border: 2px solid #57418c;
+    border-radius: 10px;
+    box-shadow: 0 0 60px rgba(255, 123, 47, 0.25);
+    background: #1a1030;
+    cursor: crosshair;
+  }
+</style>
+</head>
+<body>
+  <div id="wrap">
+    <canvas id="game" width="960" height="600"></canvas>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
